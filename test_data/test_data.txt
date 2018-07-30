@@ -1,0 +1,10 @@
+DaVid:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+David:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+DavId:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+David:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+David:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+David:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+DaVid:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+David:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+DaviD:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
+DaviD:300,andre:221,petra:112,david:123,bernhard:300;andre:-221,Alex:112,David: 123,andrE:-13,Olga:112
