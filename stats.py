@@ -10,6 +10,10 @@ class StatsGenerator():
         self._data = data
 
     def get_average_working_time(self):
+        '''
+        Calculate average working time for all employees
+        :return:
+        '''
 
         time_count = 0
         employee_cout = 0

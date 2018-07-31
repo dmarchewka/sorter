@@ -1,30 +1,42 @@
-class Messanger():
+from data import Data
+from fIleReader import FileReader
+from fileWriter import FileWriter
+from sorter import Sorter
+from stats import StatsGenerator
+from os import path, getcwd
 
-    a = 12
+class Main():
 
+    file_path = path.join(getcwd(), 'test_data', 'test_data.txt')
 
-class A():
+    def run(self):
+        # Read file
+        file_reader = FileReader(self.file_path)
+        file_reader.parse()
 
-    def __init__(self, m):
-        self.m = m
+        # Store output in data object
+        data = Data(raw_data=file_reader.result)
 
-    def changeA(self):
-        self.m.a = 7
+        # Sort data
+        sorter = Sorter(raw_data=file_reader.result)
+        sorter.create_time_employee()
+        sorter.create_time_sorted()
 
-class B():
+        # Store sorted data in data object
+        data.time_employee = sorter.time_employee
+        data.time_sorted = sorter.time_sorted
 
-    def __init__(self, m):
-        self.m = m
+        # Create statistics
+        stats = StatsGenerator(data)
+        stats.get_average_working_time()
 
-    def changeA(self):
-        self.m.a = 9
+        # Write data to files
+        file_writer = FileWriter(data, stats.statistics)
+        file_writer.create_stats_output()
+        file_writer.create_data_output()
+        file_writer.write2json()
+        file_writer.write2cvs()
 
-m = Messanger()
-a = A(m)
-b = B(m)
-
-print b.m.a
-a.changeA()
-print b.m.a
-b.changeA()
-print a.m.a
+if __name__ == '__main__':
+    obj = Main()
+    obj.run()

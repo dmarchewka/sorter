@@ -15,5 +15,5 @@ class TestSorter(TestCase):
 
     def test_quick_sort_time(self):
         self.sorter.create_time_employee()
-        self.sorter.quick_sort_time()
+        self.sorter.create_time_sorted()
         self.assertListEqual([5460, 3000, 1120, -130], self.sorter.time_sorted)

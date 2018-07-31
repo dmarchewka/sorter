@@ -14,4 +14,4 @@ class TestStatsGenerator(TestCase):
 
     def test_get_average_working_time(self):
         self.stats.get_average_working_time()
-        print self.stats.statistics
+        self.assertDictEqual({'average_working_time': 1948}, self.stats.statistics)

@@ -1,3 +1,19 @@
+from numpy import array
+import time
+
+def timeit(method):
+
+    def timed(*args, **kw):
+        ts = time.time()
+        result = method(*args, **kw)
+        te = time.time()
+
+        print '%r %2.2f sec' % \
+              (method.__name__, te-ts)
+        return result
+
+    return timed
+
 class Sorter():
 
     _raw_data = {}
@@ -17,18 +33,12 @@ class Sorter():
                 self.time_employee[val].append(key)
             else:
                 self.time_employee[val] = [key,]
-
-    def quick_sort_time(self):
+    @timeit
+    def create_time_sorted(self):
         '''
-        Python implementation of quick sort algorithm for better performance
+        Using numpy array.sort that uses quick sort algorithm
         :return:
         '''
-        def quick_sort(arr):
-            if len(arr) <= 1:
-                return arr
-
-            pivot = arr[0]
-
-            return quick_sort([x for x in arr if x > pivot]) + [pivot,] + quick_sort([x for x in arr if x < pivot])
-
-        self.time_sorted = quick_sort(self.time_employee.keys())
+        arr = array(self.time_employee.keys())
+        arr.sort()
+        self.time_sorted = arr[::-1].flat[:]
