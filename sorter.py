@@ -1,6 +1,7 @@
 from numpy import array
 import time
 
+
 def timeit(method):
 
     def timed(*args, **kw):
@@ -14,31 +15,35 @@ def timeit(method):
 
     return timed
 
-class Sorter():
 
-    _raw_data = {}
-    time_employee = {}
-    time_sorted = []
+class Sorter:
+
+    _raw_data = None
+    time_employee = None
+    time_sorted = None
 
     def __init__(self, raw_data):
         self._raw_data = raw_data
+        self.time_sorted = []
+        self.time_employee = {}
 
     def create_time_employee(self):
-        '''
+        """
         Creates dictionary where key represents time worked and value is a list of names of the employees
         :return:
-        '''
+        """
         for key, val in self._raw_data.items():
-            if self.time_employee.has_key(val):
+            if val in self.time_employee.keys():
                 self.time_employee[val].append(key)
             else:
                 self.time_employee[val] = [key,]
+
     @timeit
     def create_time_sorted(self):
-        '''
+        """
         Using numpy array.sort that uses quick sort algorithm
         :return:
-        '''
+        """
         arr = array(self.time_employee.keys())
         arr.sort()
-        self.time_sorted = arr[::-1].flat[:]
+        self.time_sorted = list(arr[::-1].flat[:])

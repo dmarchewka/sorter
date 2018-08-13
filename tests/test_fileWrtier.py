@@ -3,8 +3,10 @@ from data import Data
 from fileWriter import FileWriter
 from collections import OrderedDict
 from os import path, getcwd
+import json
 
-class TestFileWrtier(TestCase):
+
+class TestFileWriter(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -13,6 +15,12 @@ class TestFileWrtier(TestCase):
                     {1120: ['alex', 'olga', 'petra'], 3000: ['bernhard'], 5460: ['david'], -130: ['andre']},
                     [5460, 3000, 1120, -130])
         cls.fileWriter = FileWriter(data, {'average_working_time': 1948})
+
+    @staticmethod
+    def get_file_content(file_name):
+        with open(file_name, 'rb') as f:
+            content = f.read()
+        return content.strip()
 
     def setUp(self):
         self.fileWriter._output = OrderedDict()
@@ -36,11 +44,6 @@ class TestFileWrtier(TestCase):
                                             {'name': 'petra', 'time': '18.7'},
                                             {'name': 'andre', 'time': '-2.2'}]}, self.fileWriter._output)
 
-    def get_file_content(self, file):
-        with open(file, 'rb') as f:
-            content = f.read()
-        return content.strip()
-
     def test_write(self):
         self.fileWriter.create_stats_output()
         self.fileWriter.create_data_output()
@@ -54,19 +57,15 @@ class TestFileWrtier(TestCase):
         self.assertTrue(path.exists(file_json))
         self.assertTrue(path.exists(file_csv))
 
-        json_content = '''{"statistics": [{"average_working_time": "32.5"}], "employees": [{"name": "david", "time": "91.0"}, {"name": "bernhard", "time": "50.0"}, {"name": "alex", "time": "18.7"}, {"name": "olga", "time": "18.7"}, {"name": "petra", "time": "18.7"}, {"name": "andre", "time": "-2.2"}]}'''
+        json_content = json.loads('''  {"statistics": [{"average_working_time": "32.5"}], "employees": [{"name": "david", "time": "91.0"}, {"name": "bernhard", "time": "50.0"}, {"name": "alex", "time": "18.7"}, 
+                            {"name": "olga", "time": "18.7"}, {"name": "petra", "time": "18.7"}, {"name": "andre", "time": "-2.2"}]}''')
 
-        self.assertEqual(json_content, self.get_file_content(file_json))
+        self.assertDictEqual(json_content, json.loads(self.get_file_content(file_json)))
 
-        cvs_content = '''statistics
-average_working_time,32.5;
-employees
-david,91.0;
-bernhard,50.0;
-alex,18.7;
-olga,18.7;
-petra,18.7;
-andre,-2.2;'''
+        cvs_content = '''statistics\r\naverage_working_time,32.5;\nemployees\r\ndavid,91.0;\nbernhard,50.0;\nalex,18.7;\nolga,18.7;\npetra,18.7;\nandre,-2.2;'''
 
         self.assertEqual(cvs_content, self.get_file_content(file_csv))
 
+    def test_emtpy_stats(self):
+        empty_data = FileWriter({})
+        self.assertDictEqual({}, empty_data._stats)

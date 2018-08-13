@@ -5,9 +5,11 @@ from sorter import Sorter
 from stats import StatsGenerator
 from os import path, getcwd
 
-class Main():
 
-    file_path = path.join(getcwd(), 'test_data', 'test_data.txt')
+class Main:
+
+    def __init__(self):
+        self.file_path = path.join(getcwd(), 'tests', 'test_data', 'test_data.txt')
 
     def run(self):
         # Read file
@@ -28,10 +30,10 @@ class Main():
 
         # Create statistics
         stats = StatsGenerator(data)
-        stats.get_average_working_time()
+        stats.calculate_average_working_time()
 
         # Write data to files
-        file_writer = FileWriter(data, stats.statistics)
+        file_writer = FileWriter(data, stats.get_statistics)
         file_writer.create_stats_output()
         file_writer.create_data_output()
         file_writer.write2json()

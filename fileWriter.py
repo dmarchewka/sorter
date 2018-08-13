@@ -3,40 +3,45 @@ import csv
 from os import path, getcwd, linesep
 from collections import OrderedDict
 
-class FileWriter():
+
+class FileWriter:
 
     _data = None
     _stats = None
-    _output = OrderedDict()
+    _output = None
     _file_name = 'output'
 
-    def __init__(self, data, stats={}):
-        self._data = data
-        self._stats = stats
-
-    def convert2hours(self, minutes):
-        '''
+    @staticmethod
+    def convert2hours(minutes):
+        """
         Convert minutes to hours
         :param minutes:
         :return:
-        '''
+        """
         return "{0:.1f}".format(round(float(minutes)/60, 1))
 
+    def __init__(self, data, stats=None):
+        self._data = data
+        if stats is None:
+            stats = {}
+        self._stats = stats
+        self._output = OrderedDict()
+
     def create_stats_output(self):
-        '''
+        """
         Create list of all statistics
         :return:
-        '''
+        """
         tmp = []
         for key, val in self._stats.items():
-            tmp.append({ key: self.convert2hours(val)})
+            tmp.append({key: self.convert2hours(val)})
         self._output['statistics'] = tmp
 
     def create_data_output(self):
-        '''
+        """
         Create list of dictionaries with all employees
         :return:
-        '''
+        """
         tmp = []
         for key in self._data.time_sorted:
             for employee in self._data.time_employee[key]:
@@ -44,19 +49,19 @@ class FileWriter():
         self._output['employees'] = tmp
 
     def write2json(self):
-        '''
+        """
         Handle writing to json file
         :return:
-        '''
+        """
         output_path = path.join(getcwd(), self._file_name + '.json')
         with open(output_path, 'wb') as f:
             json.dump(self._output, f)
 
     def write2cvs(self):
-        '''
+        """
         Handle writing to csv file with custom line separators
         :return:
-        '''
+        """
         output_path = path.join(getcwd(), self._file_name + '.csv')
         line_separator = ';'+linesep
         with open(output_path, 'wb') as f:

@@ -1,19 +1,17 @@
 class FileReader:
 
     _file = None
-    BUFFER_SIZE = 20000000 # 20MB
-    result = {}
+    BUFFER_SIZE = 20000000  # 20MB
+    result = None
 
-    def __init__(self, file):
-        self._file = file
-
-    def split(self, text, separators):
-        '''
+    @staticmethod
+    def split(text, separators):
+        """
         Custom split method
         :param text: text to split
         :param separators: tuple of separators
         :return:
-        '''
+        """
         default = separators[0]
 
         for separator in separators[1:]:
@@ -21,18 +19,22 @@ class FileReader:
 
         return text.split(default)
 
+    def __init__(self, file):
+        self._file = file
+        self.result = {}
+
     def parse(self):
-        '''
+        """
         Buffering and parsing file
         :return:
-        '''
+        """
         with open(self._file, buffering=self.BUFFER_SIZE) as f:
             for line in f:
-                list = self.split(line, (',', ';'))
-                for item in list:
+                line_split = self.split(line, (',', ';'))
+                for item in line_split:
                     key, val = [x.strip().lower() for x in item.split(':')]
                     val = int(val)
-                    if self.result.has_key(key):
+                    if key in self.result:
                         self.result[key] += val
                     else:
                         self.result[key] = val

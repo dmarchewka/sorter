@@ -1,6 +1,7 @@
 from unittest import TestCase
 from sorter import Sorter
 
+
 class TestSorter(TestCase):
 
     @classmethod
